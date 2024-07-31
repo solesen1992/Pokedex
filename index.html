@@ -4,16 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- 'defer' makes the html run before the javascript-->
+    <script src="./pokemon.js" defer></script>
 </head>
 <body>
     <main class="main">
         <header class="header-home">
             <div class="container">
+                <!-- Logo in the top of the screen -->
                 <div class="logo-wrapper">
                     <img src="./assets/pokeball.svg" alt="pokeball">
+                    <h1>Pokedex</h1>
+                </div>
+
+                <div class="search-wrapper">
+                    <!-- Search for pokemon area -->
+                    <div class="search-wrap">
+                        <img src="./assets/search.svg" alt="search icon" class="search-icon">
+                        <input type="text" class="search-input body3-fonts" placeholder="Search" id="search-input">
+                        <img src="./assets/cross.svg" alt="cross icon" class="search-close-icon" id="search-close-icon">
+                    </div>
+                    <!-- The sorting button on the right. Next to the search label -->
+                    <div class="sort-wrapper">
+                        <div class="sort-wrap">
+                            <img src="./assets/sorting.svg" alt="sorting" class="sort-icon" id="sort-icon">
+                        </div>
+                        <!-- The drop down menu when you click "sort" -->
+                        <div class="filter-wrapper">
+                            <p class="body2-fonts">Sort by:</p>
+                            <div class="filter-wrap">
+                                <div>
+                                    <!-- The button type when you're picking sort by name or number. The number is checked by default-->
+                                    <input type="radio" id="number" name="filters" value="number" checked>
+                                    <label for="number" class="body3-fonts">Number</label>
+                                </div>
+                                <div>
+                                    <!-- Sort by name-->
+                                    <input type="radio" id="name" name="filters" value="name">
+                                    <label for="name" class="body3-fonts">Name</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
+        <!-- Pokemon list. Just needs to make a template and then it will fill it out with the information from the API -->
+         <section class="pokemon-list">
+            <div class="container">
+                <div class="list-wrapper"></div>
+            </div>
+            <!-- If we try to find a pokemon that doesn't exist -->
+            <div id="not-found-message">Pokemon not found</div>
+         </section>
     </main>
 </body>
 </html>
