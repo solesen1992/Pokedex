@@ -1,5 +1,5 @@
 # Pokedex
-Pokémon dictionary with all the species.
+Pokémon dictionary with all the species. The Pokémon dictionary is made in HTML, CSS and javascript.
 
 The project has the following components:
 - API Configuration
