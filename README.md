@@ -1,7 +1,7 @@
 # Pokedex
-Pokémon dictionary with (almost) all the species. The application fetches data from the PokeAPI and displays a list of Pokémon with search and sorting functionalities.
+Pokémon dictionary with 151 pokémon species. The application fetches data from the PokeAPI and displays a list of Pokémon with search and sorting functionalities. It's possible to add up till 1,025 pokémon but for now, we'll just fetch the first 151.
 
-The Pokémon dictionary is made in HTML, CSS, and JavaScript.
+The Pokémon dictionary is made in HTML, CSS, and JavaScript. It fetches data from the PokeAPI.
 
 The project has the following components:
 - API Configuration
