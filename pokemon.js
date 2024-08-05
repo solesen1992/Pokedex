@@ -32,7 +32,7 @@ fetch(`https://pokeapi.co/api/v2/pokemon?limit=${MAX_POKEMON}`)
 async function fetchPokemonDataBeforeRedirect(id) {
     try {
         // this is a promise that you're gonna receive from data. It's gonna come from here. We will receive it and turn it into json so we can read it.
-        const [pokemon, pokemonSpecies] = await Promise.resolve.all([fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+        const [pokemon, pokemonSpecies] = await Promise.all([fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
             .then((res) =>
             res.json() 
         ),
@@ -61,13 +61,13 @@ function displayPokemons(pokemon) {
         // Creating the HTML that is inside every list item.
         listItem.innerHTML = `
             <div class="number-wrap">
-                <p class=""caption-fronts">#${pokemonID}</p>
+                <p class="caption-fronts">#${pokemonID}</p>
             </div>
             <div class="image-wrap">
                 <img src="https://raw.githubusercontent.com/pokeapi/sprites/master/sprites/pokemon/other/dream-world/${pokemonID}.svg" alt="${pokemon.name}" />
             </div>
             <div class="name-wrap">
-                <p class=""body3-fronts">#${pokemon.name}</p>
+                <p class="body3-fronts">#${pokemon.name}</p>
             </div>
         `;
 
@@ -97,12 +97,13 @@ function handleSearch() {
             return pokemonID.startsWith(searchTerm);
         });
     } else if (nameFilter.checked) {
-        filteredPokemons = allPokemons.filter((pokemon) =>
+        filteredPokemons = allPokemons.filter((pokemon) => {
             pokemon.name.toLowerCase().startsWith(searchTerm)
-        );
+    });
     } else {
         filteredPokemons = allPokemons;
     }
+
     displayPokemons(filteredPokemons);
 
     if (filteredPokemons.length === 0) {
@@ -112,7 +113,7 @@ function handleSearch() {
     }
 }
 
-const closeButton = document.querySelector(."search-close-icon");
+const closeButton = document.querySelector(".search-close-icon");
 closeButton.addEventListener("click", clearSearch);
 
 function clearSearch() {
