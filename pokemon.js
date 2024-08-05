@@ -111,3 +111,12 @@ function handleSearch() {
         notFoundMessage.style.display = "none";
     }
 }
+
+const closeButton = document.querySelector(."search-close-icon");
+closeButton.addEventListener("click", clearSearch);
+
+function clearSearch() {
+    searchInput.value = ""; //Empty string
+    displayPokemons(allPokemons); //Display all pokemons
+    notFoundMessage.style.display = "none";
+}
