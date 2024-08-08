@@ -9,7 +9,7 @@ The project has the following components:
 - Search Panel
 - Sorting Functionality
 - Filters
-- Pokémons Details 🌟
+- Pokémons Details from the PokeAPI🌟
 
 # Documentation
 ## HTML Code
