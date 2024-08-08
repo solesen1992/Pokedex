@@ -1,3 +1,29 @@
+/** 
+ * This JavaScript class interacts with the Pokémon API to retrieve and display a list of Pokémon, allowing users to search and view 
+ * details of individual Pokémon.
+ * 
+ * Fetching Pokémon Data
+ * The code fetches data from the Pokémon API using fetch and retrieves up to MAX_POKEMON Pokémon.
+ * The Pokémon data is stored in the allPokemons array and then displayed on the webpage using the displayPokemons function.
+ * 
+ * Displaying Pokémon
+ * displayPokemons(pokemon): This function clears the current list and dynamically creates a list of Pokémon. 
+ * Each Pokémon is displayed with its ID, image, and name.
+ * Clicking on a Pokémon triggers an asynchronous function, fetchPokemonDataBeforeRedirect(id), which fetches additional 
+ * data before redirecting to a detailed page.
+ * 
+ * Search Functionality
+ * Users can search for Pokémon by name or ID using the handleSearch function, which filters the list based on the search input 
+ * and selected filter (number or name). If no Pokémon match the search, a "Not Found" message is displayed.
+ * 
+ * Clearing Search
+ * The clearSearch function allows users to reset the search input and display the full list of Pokémon again.
+ * 
+ * Event Listeners
+ * The code adds event listeners for search input, search filtering, and clearing the search.
+*/
+
+
 const MAX_POKEMON = 649; //maximum amount of pokemon we're gonna retrieve from the pokemon API
 const listWrapper = document.querySelector(".list-wrapper"); //referencing the HTML elements. The place we insert pokemon.
 const searchInput = document.querySelector("#search-input");
