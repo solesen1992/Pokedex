@@ -23,24 +23,30 @@
  * The code adds event listeners for search input, search filtering, and clearing the search.
 */
 
-
+/**
+ * Variables that will be used in the code
+*/
 const MAX_POKEMON = 649; //maximum amount of pokemon we're gonna retrieve from the pokemon API
-const listWrapper = document.querySelector(".list-wrapper"); //referencing the HTML elements. The place we insert pokemon.
-const searchInput = document.querySelector("#search-input");
-const numberFilter = document.querySelector("#number");
-const nameFilter = document.querySelector("#name");
-const notFoundMessage = document.querySelector("#not-found-message");
+const listWrapper = document.querySelector(".list-wrapper"); // Reference to the HTML element where the list of Pokémon will be displayed.
+const searchInput = document.querySelector("#search-input"); // Reference to the search input field for filtering Pokémon.
+const numberFilter = document.querySelector("#number"); // Reference to the radio button for filtering Pokémon by number.
+const nameFilter = document.querySelector("#name"); // Reference to the radio button for filtering Pokémon by name.
+const notFoundMessage = document.querySelector("#not-found-message"); // Reference to the "Not Found" message element.
 
-let allPokemons = []; //Empty array. Where we store all the pokemons when we have to retrieve them.
+let allPokemons = []; // An empty array to store all retrieved Pokémon.
 
-// Fetches information from pokeapi.co
-// Shows the amount of pokemon we have chosen in the MAX_POKEMON variable
+
+/** 
+ * Fetches Pokémon data from the API, limited by the MAX_POKEMON variable.
+ * It shows the amount of pokemon, we have chosen in the MAX_POKEMON variable.
+ */
 fetch(`https://pokeapi.co/api/v2/pokemon?limit=${MAX_POKEMON}`)
-.then((response) => response.json()) // Takes the response from the website and do something with that response: Turn it into a json
-// Takes the data we receive. Receives the raw data from the pokemon API
-.then((data) => {
-    allPokemons = data.results;
+.then((response) => response.json()) // Converts the API response to JSON format.
+// Takes the data we receive. Receives the raw data from the pokemon API.
+.then((data) => { 
+    allPokemons = data.results; // Stores the retrieved Pokémon data in the allPokemons array.
     // To show what we are receiving from the API 
+    // Uncomment the following lines to log data to the console for debugging purposes.
     // console.log(data);
     // console.log(data.results);
     // console.log(data.results[0]);
@@ -48,43 +54,52 @@ fetch(`https://pokeapi.co/api/v2/pokemon?limit=${MAX_POKEMON}`)
     // console.log(data.results[0].name.url);
     // To show the pokemons
     // console.log(allPokemons);
-    displayPokemons(allPokemons);
+    displayPokemons(allPokemons); // Displays the list of all retrieved Pokémon on the page.
 });
 
-// When we click on a pokemon, we use this function. It takes some time before the pokemon data is fetched from the API.
-// It takes some time for the data to show up from the pokeapi
-// async allows us to run some code and delay the next line of javascript code until we have retrieved the data that we want/need
-// have to use async functions in bigger programs
+/** 
+ * Async function to fetch detailed data for a specific Pokémon before redirecting.
+ * When we click on a pokemon, we use this function. It takes some time before the pokemon data is fetched from the API.
+ * It takes some time for the data to show up from the pokeapi.
+ * async allows us to run some code and delay the next line of javascript code until we have retrieved the data that we want/need
+ * have to use async functions in bigger programs
+ */
 async function fetchPokemonDataBeforeRedirect(id) {
     try {
+        // Fetches both Pokémon and Pokémon species data concurrently.
         // this is a promise that you're gonna receive from data. It's gonna come from here. We will receive it and turn it into json so we can read it.
         const [pokemon, pokemonSpecies] = await Promise.all([fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
             .then((res) =>
-            res.json() 
+            res.json() // Converts the Pokémon data response to JSON format.
         ),
         fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
         .then((res) => 
-            res.json() 
+            res.json() // Converts the Pokémon species data response to JSON format.
         ),
     ])
     //If it works and we retrieve the data, return true.
-    return true; 
+    return true; // Returns true if data fetching is successful.
     } catch(error) {
-        console.error("Failed to fetch Pokemon data before redirect");
+        console.error("Failed to fetch Pokemon data before redirect"); // Logs an error message if data fetching fails.
     }
 }
 
-// Fetch the pokemon list
+
+
+/**
+ * Function to display the list of Pokémon. Fetches the pokemon list.
+*/ 
 function displayPokemons(pokemon) {
     // Every time we fetch, we're gonna clear the inner HTML.
-    listWrapper.innerHTML = "";
-    pokemon.forEach((pokemon) => {
+    listWrapper.innerHTML = ""; // Clears the existing content in the listWrapper element.
+    pokemon.forEach((pokemon) => { // Iterates over each Pokémon in the array.
         // After the sixt slash / in the pokemon url
-        const pokemonID = pokemon.url.split("/")[6];
-        const listItem = document.createElement("div");
+        const pokemonID = pokemon.url.split("/")[6]; // Extracts the Pokémon ID from its URL.
+        const listItem = document.createElement("div"); // Creates a new div element for the Pokémon list item.
         // List item is the box the pokemon image and name is in on the front page / index site.
-        listItem.className = "list-item";
+        listItem.className = "list-item"; // Assigns a class name to the list item for styling.
         // Creating the HTML that is inside every list item.
+        // Sets the inner HTML of the list item to include the Pokémon's number, image, and name.
         listItem.innerHTML = `
             <div class="number-wrap">
                 <p class="caption-fronts">#${pokemonID}</p>
@@ -98,40 +113,50 @@ function displayPokemons(pokemon) {
         `;
 
         // Takes us to the detail page of every pokemon when we click on it from the main page
+        // Adds a click event listener to the list item to fetch detailed data and redirect to the Pokémon's detail page.
         listItem.addEventListener("click", async () => {
-            const success = await fetchPokemonDataBeforeRedirect(pokemonID);
+            const success = await fetchPokemonDataBeforeRedirect(pokemonID); // Fetches detailed data for the Pokémon.
             if (success) {
                 //redirects the window
-                window.location.href = `./detail.html?id=${pokemonID}`;
+                window.location.href = `./detail.html?id=${pokemonID}`; // Redirects to the Pokémon's detail page if data fetching is successful.
             }
         });
 
         // Adds all the list items to the list wrapper (so it adds all the pokemons)
+        // Appends the list item to the listWrapper element, adding it to the displayed list.
         listWrapper.appendChild(listItem);
     });
 }
 
+
+/**
+ * Adds an event listener to the search input field that triggers the handleSearch function on keyup.
+ */
 searchInput.addEventListener("keyup", handleSearch);
 
+/**
+ * Function to handle the search functionality.
+ */
 function handleSearch() {
-    const searchTerm = searchInput.value.toLowerCase();
-    let filteredPokemons;
+    const searchTerm = searchInput.value.toLowerCase(); // Converts the search input to lowercase for case-insensitive comparison.
+    let filteredPokemons; // Variable to store the filtered Pokémon list.
 
-    if(numberFilter.checked) {
+    if(numberFilter.checked) { // Checks if the number filter is selected.
         filteredPokemons = allPokemons.filter((pokemon) => {
-            const pokemonID = pokemon.url.split("/")[6];
-            return pokemonID.startsWith(searchTerm);
+            const pokemonID = pokemon.url.split("/")[6]; // Extracts the Pokémon ID from its URL.
+            return pokemonID.startsWith(searchTerm); // Filters Pokémon by ID based on the search term.
         });
-    } else if (nameFilter.checked) {
+    } else if (nameFilter.checked) { // Checks if the name filter is selected.
         filteredPokemons = allPokemons.filter((pokemon) => {
-            return pokemon.name.toLowerCase().startsWith(searchTerm)
+            return pokemon.name.toLowerCase().startsWith(searchTerm) // Filters Pokémon by name based on the search term.
     });
     } else {
-        filteredPokemons = allPokemons;
+        filteredPokemons = allPokemons; // If no filter is selected, display all Pokémon.
     }
 
-    displayPokemons(filteredPokemons);
+    displayPokemons(filteredPokemons); // Displays the filtered list of Pokémon.
 
+    // Displays the "Not Found" message if no Pokémon match the search term.
     if (filteredPokemons.length === 0) {
         notFoundMessage.style.display = "block";
     } else {
@@ -139,11 +164,17 @@ function handleSearch() {
     }
 }
 
-const closeButton = document.querySelector(".search-close-icon");
-closeButton.addEventListener("click", clearSearch);
+/**
+ * Function of the close button for the search input.
+ */
+const closeButton = document.querySelector(".search-close-icon"); // Reference to the close button for clearing the search input.
+closeButton.addEventListener("click", clearSearch); // Adds an event listener to trigger the clearSearch function on click.
 
+/**
+ * Function to clear the search input and display all Pokémon
+ */
 function clearSearch() {
-    searchInput.value = ""; //Empty string
-    displayPokemons(allPokemons); //Display all pokemons
-    notFoundMessage.style.display = "none";
+    searchInput.value = ""; // Resets the search input field to an empty string.
+    displayPokemons(allPokemons); // Displays the full list of Pokémon.
+    notFoundMessage.style.display = "none"; // Hides the "Not Found" message.
 }
