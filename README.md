@@ -12,7 +12,7 @@ The project has the following components:
 - Pokémons Details from the PokeAPI🌟
 
 # Watch it live
-solesen1992.github.io/Pokedex/
+https://solesen1992.github.io/Pokedex/
 
 # Documentation
 ## HTML Code
