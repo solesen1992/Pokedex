@@ -3,7 +3,7 @@ let currentPokemonId = null; // Starts with nothing.
 
 // Run this piece of code when we run the page
 document.addEventListener("DOMContentLoaded", () => {
-    const MAX_POKEMONS = 151;
+    const MAX_POKEMONS = 649;
     const pokemonId = new URLSearchParams(window.location.search).get("id"); // Gets the pokemonID. Gets it as a String.
     const id = parseInt(pokemonId, 10); // Turns the String into a normal number.
 
@@ -56,7 +56,7 @@ async function loadPokemon(id) {
 
             });
         }
-        if (id !== 151) {
+        if (id !== 649) {
             rightArrow.addEventListener("click", () => {
                 navigatePokemon(id + 1);
 

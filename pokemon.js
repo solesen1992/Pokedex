@@ -26,7 +26,7 @@
 /**
  * Variables that will be used in the code
 */
-const MAX_POKEMON = 151; //maximum amount of pokemon we're gonna retrieve from the pokemon API
+const MAX_POKEMON = 649; //maximum amount of pokemon we're gonna retrieve from the pokemon API
 const listWrapper = document.querySelector(".list-wrapper"); // Reference to the HTML element where the list of Pokémon will be displayed.
 const searchInput = document.querySelector("#search-input"); // Reference to the search input field for filtering Pokémon.
 const numberFilter = document.querySelector("#number"); // Reference to the radio button for filtering Pokémon by number.
@@ -102,13 +102,13 @@ function displayPokemons(pokemon) {
         // Sets the inner HTML of the list item to include the Pokémon's number, image, and name.
         listItem.innerHTML = `
             <div class="number-wrap">
-                <p class="caption-fronts">#${pokemonID}</p>
+                <p class="caption-fonts">#${pokemonID}</p>
             </div>
-            <div class="image-wrap">
+            <div class="img-wrap">
                 <img src="https://raw.githubusercontent.com/pokeapi/sprites/master/sprites/pokemon/other/dream-world/${pokemonID}.svg" alt="${pokemon.name}" />
             </div>
             <div class="name-wrap">
-                <p class="body3-fronts">#${pokemon.name}</p>
+                <p class="body3-fonts">#${pokemon.name}</p>
             </div>
         `;
 
