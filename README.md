@@ -11,6 +11,9 @@ The project has the following components:
 - Filters
 - Pokémons Details from the PokeAPI🌟
 
+# Watch it live
+solesen1992.github.io/Pokedex/
+
 # Documentation
 ## HTML Code
 The HTML code defines the structure of the Pokedex application, including the header, search bar, sorting options, and the main section where the Pokémon list is displayed.
