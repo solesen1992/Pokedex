@@ -3,7 +3,7 @@ let currentPokemonId = null; // Starts with nothing.
 
 // Run this piece of code when we run the page
 document.addEventListener("DOMContentLoaded", () => {
-    const MAX_POKEMONS = 649;
+    const MAX_POKEMONS = 151;
     const pokemonId = new URLSearchParams(window.location.search).get("id"); // Gets the pokemonID. Gets it as a String.
     const id = parseInt(pokemonId, 10); // Turns the String into a normal number.
 
@@ -56,8 +56,8 @@ async function loadPokemon(id) {
 
             });
         }
-        if (id !== 649) {
-            leftArrow.addEventListener("click", () => {
+        if (id !== 151) {
+            rightArrow.addEventListener("click", () => {
                 navigatePokemon(id + 1);
 
             });
@@ -194,7 +194,7 @@ function displayPokemonDetails(pokemon) {
     });
 
     document.querySelector(".pokemon-detail-wrap .pokemon-detail p.body3-fonts.weight").textContent = `${weight / 10} kg`; // Weights in the API is 10 times what it should be.
-    document.querySelector(".pokemon-detail-wrap .pokemon-detail p.body3-fonts.height").textContent = `${height / 10} kg`;
+    document.querySelector(".pokemon-detail-wrap .pokemon-detail p.body3-fonts.height").textContent = `${height / 10} m`;
 
     const abilitiesWrapper = document.querySelector(".pokemon-detail-wrap .pokemon-detail.move");
     abilities.forEach(({ ability }) => {
@@ -210,9 +210,9 @@ function displayPokemonDetails(pokemon) {
     const statNameMapping = {
         hp: "HP",
         attack: "ATTACK",
-        defence: "DEFENCE",
-        "special-attack": "SPECIAL ATTACK",
-        "special-defence": "SPECIAL DEFENCE",
+        defense: "DEFENCE",
+        "special-attack": "SATK",
+        "special-defense": "SDEF",
         speed: "SPEED",
     }
 
@@ -250,5 +250,3 @@ function getEnglishFlavorText(pokemonSpecies) {
     } 
     return "";
 }
-    
- 
