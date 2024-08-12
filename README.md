@@ -49,3 +49,6 @@ The displayPokemons function creates and inserts HTML elements for each Pokémon
 
 ### Search Functionality
 The handleSearch function filters the Pokémon based on the search input and updates the displayed list.
+
+# Credit
+This project was made by following a tutorial by Ademir: https://github.com/Ade-mir

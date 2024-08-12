@@ -1,9 +1,21 @@
+/**
+ * This code is used to display Pokémon details.
+ * It fetches Pokémon data from the PokeAPI, displays the details, and allows navigation between different Pokémon.
+ * 
+ * Main functionalities:
+ * - Fetch and display Pokémon details including name, ID, types, weight, height, abilities, and stats.
+ * Change the background color based on the Pokémon's type.
+ * Navigate between Pokémon using left and right arrow buttons.
+ * Change the URL without reloading the page for a single-page application experience.
+ * Handle fetching errors and log them to the console.
+*/
+
 // Variables
 let currentPokemonId = null; // Starts with nothing.
 
 // Run this piece of code when we run the page
 document.addEventListener("DOMContentLoaded", () => {
-    const MAX_POKEMONS = 649;
+    const MAX_POKEMONS = 649; // Maximum number of Pokémon
     const pokemonId = new URLSearchParams(window.location.search).get("id"); // Gets the pokemonID. Gets it as a String.
     const id = parseInt(pokemonId, 10); // Turns the String into a normal number.
 
@@ -11,82 +23,72 @@ document.addEventListener("DOMContentLoaded", () => {
         return (window.location.href = "./index.html"); // Return to the main page
     }
 
-    currentPokemonId = id;
-    loadPokemon(id);
+    currentPokemonId = id; // Set the current Pokemon ID
+    loadPokemon(id); // Load the Pokémon data
 });
 
 /**
  * Loading of the pokemon
- * @param {*} id 
- * @returns 
+ * @param {*} id
+ * @returns
  */
 async function loadPokemon(id) {
     try {
         // Fetches both Pokémon and Pokémon species data concurrently.
-        // this is a promise that you're gonna receive from data. It's gonna come from here. We will receive it and turn it into json so we can read it.
-        const [pokemon, pokemonSpecies] = await Promise.all([fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-            .then((res) =>
-            res.json() // Converts the Pokémon data response to JSON format.
-        ),
-        fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
-        .then((res) => 
-            res.json() // Converts the Pokémon species data response to JSON format.
-            ),
+        const [pokemon, pokemonSpecies] = await Promise.all([
+            fetch(`https://pokeapi.co/api/v2/pokemon/${id}`) // Fetch Pokémon data
+            .then((res) => res.json()), // Converts the Pokémon data response to JSON format
+            fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`) // Fetch Pokémon species data
+            .then((res) => res.json()), // Converts the Pokémon species data response to JSON format
         ]);
 
         const abilitiesWrapper = document.querySelector(".pokemon-detail-wrap .pokemon-detail.move");
         abilitiesWrapper.innerHTML = ""; // Clear information about the previous pokemon
 
-        if (currentPokemonId === id) {
-            displayPokemonDetails(pokemon);
-                const flavorText = getEnglishFlavorText(pokemonSpecies);
-                document.querySelector(".body3-fonts.pokemon-description").textContent = flavorText;
-        
-        const [leftArrow, rightArrow] = ["#leftArrow", "#rightArrow"].map((sel) =>
-            document.querySelector(sel)
-        );
+        if (currentPokemonId === id) { // Check if the current Pokemon ID matches the requested ID
+            displayPokemonDetails(pokemon); // Display Pokémon details
+            const flavorText = getEnglishFlavorText(pokemonSpecies); // Get English flavor text
+            document.querySelector(".body3-fonts.pokemon-description").textContent = flavorText; // Set the flavor text
 
-        // Calls the navigatePokemon function when we click the left and right arrow
-        leftArrow.removeEventListener("click", navigatePokemon);
-        rightArrow.removeEventListener("click", navigatePokemon);
+            const [leftArrow, rightArrow] = ["#leftArrow", "#rightArrow"].map((sel) =>
+                document.querySelector(sel)
+            );
 
-        if (id !== 1) {
-            leftArrow.addEventListener("click", () => {
-                navigatePokemon(id - 1);
+            // Calls the navigatePokemon function when we click the left and right arrow
+            leftArrow.removeEventListener("click", navigatePokemon); // Remove previous event listener
+            rightArrow.removeEventListener("click", navigatePokemon); // Remove previous event listener
 
-            });
-        }
-        if (id !== 649) {
-            rightArrow.addEventListener("click", () => {
-                navigatePokemon(id + 1);
+            if (id !== 1) { // If not the first Pokémon
+                leftArrow.addEventListener("click", () => {
+                    navigatePokemon(id - 1); // Navigate to the previous Pokémon
+                });
+            }
+            if (id !== 649) { // If not the last Pokémon
+                rightArrow.addEventListener("click", () => {
+                    navigatePokemon(id + 1); // Navigate to the next Pokémon
+                });
+            }
 
-            });
-        }
-        /**
-         * Changes the url without reloading the page. Useful when we want to switch between the pokemon without reloading the page. 
-         * Single page application.
-        */
-        window.history.pushState({}, "", `./detail.html?id=${id}`); 
+            // Changes the URL without reloading the page. Useful for single-page applications.
+            window.history.pushState({}, "", `./detail.html?id=${id}`);
         }
 
         return true;
-    }
-    catch (error) {
-        console.error("An error occured while fetching Pokemon data:", error);
+    } catch (error) { // Catch any errors that occur during the fetch
+        console.error("An error occured while fetching Pokemon data:", error); // Log the error
         return false;
     }
 }
 
-
+// Navigate to the specified Pokémon ID
 async function navigatePokemon(id) {
-    currentPokemonId = id;
-    await loadPokemon(id);
+    currentPokemonId = id; // Set the current Pokémon ID
+    await loadPokemon(id); // Load the Pokémon data
 }
 
 /**
- * Holds all the diffent colors in the background. WHen the type changes, the background color changes too.
- * Poison = purple, electric = yellow etc.
-*/
+ * Holds all the different colors for the background. When the type changes, the background color changes too.
+ */
 const typeColors = {
     normal: "#A8A878",
     fire: "#F08030",
@@ -108,145 +110,151 @@ const typeColors = {
     dark: "#EE99AC",
 }
 
+// Set styles for multiple elements
 function setElementStyles(elements, cssProperty, value) {
-    elements.forEach((element => {
-        element.style[cssProperty] = value;
-    }));
+    elements.forEach((element) => {
+        element.style[cssProperty] = value; // Set the CSS property value
+    });
 }
 
 /**
  * Hex color used in main stats.
- * Turning hex color into rgba color.
- * @param {*} hex 
+ * Convert hex color to rgba color.
+ * @param {*} hex
  */
 function rgbaFromHex(hexColor) {
     return [
-        parseInt(hexColor.slice(1, 3), 16),
-        parseInt(hexColor.slice(3, 5), 16),
-        parseInt(hexColor.slice(5, 7), 16),
-    ].join(", ");
+        parseInt(hexColor.slice(1, 3), 16), // Red component
+        parseInt(hexColor.slice(3, 5), 16), // Green component
+        parseInt(hexColor.slice(5, 7), 16), // Blue component
+    ].join(", "); // Join components with a comma
 }
 
+// Set the background color based on Pokémon type
 function setTypeBackgroundColor(pokemon) {
-    const mainType = pokemon.types[0].type.name;
-    const color = typeColors[mainType];
+    const mainType = pokemon.types[0].type.name; // Get the main type of the Pokémon
+    const color = typeColors[mainType]; // Get the color for the type
 
-    if (!color) {
-        console.warn(`Color not defined for type: ${mainType}`);
+    if (!color) { // If color is not defined
+        console.warn(`Color not defined for type: ${mainType}`); // Log a warning
         return;
     }
 
-    const detailMainElement = document.querySelector(".detail-main");
-    setElementStyles([detailMainElement], "backgroundColor", color);
-    setElementStyles([detailMainElement], "borderColor", color);
+    const detailMainElement = document.querySelector(".detail-main"); // Get the main detail element
+    setElementStyles([detailMainElement], "backgroundColor", color); // Set background color
+    setElementStyles([detailMainElement], "borderColor", color); // Set border color
 
-    setElementStyles(document.querySelectorAll(".power-wrapper > p"), "backgroundColor", color);
-    setElementStyles(document.querySelectorAll(".stats-wrap p.stats"), "color", color);
-    setElementStyles(document.querySelectorAll(".stats-wrap .progress-bar"), "color", color);
+    setElementStyles(document.querySelectorAll(".power-wrapper > p"), "backgroundColor", color); // Set power wrapper background color
+    setElementStyles(document.querySelectorAll(".stats-wrap p.stats"), "color", color); // Set stats text color
+    setElementStyles(document.querySelectorAll(".stats-wrap .progress-bar"), "color", color); // Set progress bar color
 
-    const rgbaColor = rgbaFromHex(color);
-    const styleTag = document.createElement("style");
+    const rgbaColor = rgbaFromHex(color); // Convert hex color to rgba
+    const styleTag = document.createElement("style"); // Create a new style tag
     styleTag.innerHTML = `
         .stats-wrap .progress-bar::-webkit-progress-bar {
-            background-color: rgba(${rgbaColor}, 0.5);
+            background-color: rgba(${rgbaColor}, 0.5); // Set progress bar background color
         }
         .stats-wrap .progress-bar::-webkit-progress-value {
-            background-color: ${color};
-        } 
+            background-color: ${color}; // Set progress value color
+        }
     `;
-    document.head.appendChild(styleTag);
+    document.head.appendChild(styleTag); // Append style tag to head
 }
 
+// Capitalize the first letter of a string
 function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase(); // Capitalize first letter
 }
 
+// Create and append an element to the parent
 function createAndAppendElement(parent, tag, options = {}) {
-    const element = document.createElement(tag);
+    const element = document.createElement(tag); // Create a new element
     Object.keys(options).forEach((key) => {
-        element[key] = options[key];
-    })
-    parent.appendChild(element);
-    return element;
+        element[key] = options[key]; // Set element options
+    });
+    parent.appendChild(element); // Append element to parent
+    return element; // Return the created element
 }
 
+// Display Pokémon details
 function displayPokemonDetails(pokemon) {
-    const { name, id, types, weight, height, abilities, stats } = pokemon;
-    const capitalizePokemonName = capitalizeFirstLetter(name);
+    const { name, id, types, weight, height, abilities, stats } = pokemon; // Destructure Pokémon data
+    const capitalizePokemonName = capitalizeFirstLetter(name); // Capitalize Pokémon name
 
-    document.querySelector("title").textContent = capitalizePokemonName;
+    document.querySelector("title").textContent = capitalizePokemonName; // Set the document title
 
-    const detailMainElement = document.querySelector(".detail-main");
-    detailMainElement.classList.add(name.toLowerCase());
+    const detailMainElement = document.querySelector(".detail-main"); // Get the main detail element
+    detailMainElement.classList.add(name.toLowerCase()); // Add Pokémon name as a class
 
-    document.querySelector(".name-wrap .name").textContent = capitalizePokemonName;
+    document.querySelector(".name-wrap .name").textContent = capitalizePokemonName; // Set Pokémon name
 
-    document.querySelector(".pokemon-id-wrap .body2-fonts").textContent = `#${String(id).padStart(3, "0")}`;
+    document.querySelector(".pokemon-id-wrap .body2-fonts").textContent = `#${String(id).padStart(3, "0")}`; // Set Pokémon ID
 
-    const imageElement = document.querySelector(".detail-img-wrapper img");
-    imageElement.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`; // main image på detail page
-    imageElement.alt = name;
+    const imageElement = document.querySelector(".detail-img-wrapper img"); // Get the image element
+    imageElement.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`; // Set image source
+    imageElement.alt = name; // Set image alt text
 
-    const typeWrapper = document.querySelector(".power-wrapper");
-    typeWrapper.innerHTML = "";
+    const typeWrapper = document.querySelector(".power-wrapper"); // Get the type wrapper
+    typeWrapper.innerHTML = ""; // Clear type wrapper
     types.forEach(({ type }) => {
-        createAndAppendElement(typeWrapper, "p", { className: `body3-fonts type ${type.name}`, textContent: type.name,});
+        createAndAppendElement(typeWrapper, "p", { className: `body3-fonts type ${type.name}`, textContent: type.name, }); // Add type elements
     });
 
-    document.querySelector(".pokemon-detail-wrap .pokemon-detail p.body3-fonts.weight").textContent = `${weight / 10} kg`; // Weights in the API is 10 times what it should be.
-    document.querySelector(".pokemon-detail-wrap .pokemon-detail p.body3-fonts.height").textContent = `${height / 10} m`;
+    document.querySelector(".pokemon-detail-wrap .pokemon-detail p.body3-fonts.weight").textContent = `${weight / 10} kg`; // Set Pokémon weight
+    document.querySelector(".pokemon-detail-wrap .pokemon-detail p.body3-fonts.height").textContent = `${height / 10} m`; // Set Pokémon height
 
-    const abilitiesWrapper = document.querySelector(".pokemon-detail-wrap .pokemon-detail.move");
+    const abilitiesWrapper = document.querySelector(".pokemon-detail-wrap .pokemon-detail.move"); // Get abilities wrapper
     abilities.forEach(({ ability }) => {
         createAndAppendElement(abilitiesWrapper, "p", {
-        className: "body3-fonts",
-        textContent: ability.name,
+            className: "body3-fonts",
+            textContent: ability.name, // Add ability elements
         });
     });
 
-    const statsWrapper = document.querySelector(".stats-wrapper");
-    statsWrapper.innerHTML = "";
+    const statsWrapper = document.querySelector(".stats-wrapper"); // Get stats wrapper
+    statsWrapper.innerHTML = ""; // Clear stats wrapper
 
-    const statNameMapping = {
+    const statNameMapping = { // Map stat names
         hp: "HP",
         attack: "ATTACK",
         defense: "DEFENCE",
         "special-attack": "SATK",
         "special-defense": "SDEF",
         speed: "SPEED",
-    }
+    };
 
-    stats.forEach(({stat, base_stat}) => {
-        const statDiv = document.createElement("div");
-        statDiv.className = "stats-wrap";
-        statsWrapper.appendChild(statDiv);
+    stats.forEach(({ stat, base_stat }) => {
+        const statDiv = document.createElement("div"); // Create stat div
+        statDiv.className = "stats-wrap"; // Set stat div class
+        statsWrapper.appendChild(statDiv); // Append stat div to wrapper
 
         createAndAppendElement(statDiv, "p", {
             className: "body3-fonts stats",
-            textContent: statNameMapping[stat.name],
+            textContent: statNameMapping[stat.name], // Add stat name
         });
 
         createAndAppendElement(statDiv, "p", {
             className: "body3-fonts",
-            textContent: String(base_stat).padStart(3, "0"),
+            textContent: String(base_stat).padStart(3, "0"), // Add stat value
         });
 
         createAndAppendElement(statDiv, "progress", {
             className: "progress-bar",
             value: base_stat,
-            max: 100,
+            max: 100, // Add progress bar
         });
     });
 
-    setTypeBackgroundColor(pokemon)
+    setTypeBackgroundColor(pokemon); // Set type background color
 }
 
+// Get English flavor text from Pokémon species data
 function getEnglishFlavorText(pokemonSpecies) {
-    for (let entry of pokemonSpecies.flavor_text_entries) {
-        if (entry.language.name === "en") {
-            let flavor = entry.flavor_text.replace(/\f/g, " ");
-            return flavor;
+    for (let entry of pokemonSpecies.flavor_text_entries) { // Iterate through flavor text entries
+        if (entry.language.name === "en") { // Check if the language is English
+            let flavor = entry.flavor_text.replace(/\\f/g, " "); // Replace line breaks
+            return flavor; // Return flavor text
         }
-    } 
-    return "";
+    }
+    return ""; // Return empty string if no English entry is found
 }

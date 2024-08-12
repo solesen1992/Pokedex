@@ -1,12 +1,19 @@
+/* 
+* Author: Ade-mir: https://github.com/Ade-mir
+*/
+
 :root {
+  /* Primary identity color */
   --identity-primary: #dc0a2d;
 
+  /* Grayscale color scheme */
   --grayscale-dark: #212121;
   --grayscale-medium: #666666;
   --grayscale-light: #e0e0e0;
   --grayscale-background: #efefef;
   --grayscale-white: #ffffff;
 
+  /* Font sizes */
   --headline-font-size: 24px;
   --body1-font-size: 14px;
   --body2-font-size: 12px;
@@ -16,18 +23,22 @@
   --subtitle3-font-size: 10px;
   --caption-font-size: 8px;
 
+  /* Line heights */
   --headline-line-height: 32px;
   --common-line-height: 16px;
   --caption-line-height: 12px;
 
+  /* Font weights */
   --font-weight-regular: 400;
   --font-weight-bold: 700;
 
+  /* Drop shadows */
   --drop-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.2);
   --drop-shadow-hover: 0px 3px 12px 3px rgba(0, 0, 0, 0.2);
   --drop-shadow-inner: 0px 1px 3px 1px rgba(0, 0, 0, 0.25) inset;
 }
 
+/* Common line height for headers and body texts */
 h2,
 h3,
 h4,
@@ -37,23 +48,28 @@ h4,
   line-height: var(--common-line-height);
 }
 
+/* Headline (h1) styles */
 h1 {
   font-size: var(--headline-font-size);
   line-height: var(--headline-line-height);
 }
 
+/* Subtitle (h2) styles */
 h2 {
   font-size: var(--subtitle1-font-size);
 }
 
+/* Subtitle (h3) styles */
 h3 {
   font-size: var(--subtitle2-font-size);
 }
 
+/* Subtitle (h4) styles */
 h4 {
   font-size: var(--subtitle3-font-size);
 }
 
+/* Body text styles */
 .body1-fonts {
   font-size: var(--body1-font-size);
 }
@@ -66,19 +82,23 @@ h4 {
   font-size: var(--body3-font-size);
 }
 
+/* Caption text styles */
 .caption-fonts {
   font-size: var(--caption-font-size);
   line-height: var(--caption-line-height);
 }
 
+/* Input focus-visible outline removal */
 input:focus-visible {
   outline: 0;
 }
 
+/* Hide arrows */
 .featured-img a.arrow.hidden {
   display: none;
 }
 
+/* Body styles */
 body {
   margin: 0;
   height: 100vh;
@@ -87,6 +107,7 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
+/* Main container styles */
 .main {
   margin: 0;
   padding: 0;
@@ -99,28 +120,34 @@ body {
   gap: 1rem;
 }
 
+/* Header styles on the home page */
 .header.home {
   width: 90%;
 }
 
+/* Container styles */
 .container {
   width: 100%;
   margin: 0;
 }
 
+/* Logo wrapper styles */
 .logo-wrapper {
   display: flex;
   align-items: center;
 }
 
+/* Logo text styles */
 .logo-wrapper > h1 {
   color: var(--grayscale-white);
 }
 
+/* Logo image styles */
 .logo-wrapper > img {
   margin-right: 16px;
 }
 
+/* Search wrapper styles */
 .search-wrapper,
 .search-wrap {
   display: flex;
@@ -129,6 +156,7 @@ body {
   gap: 16px;
 }
 
+/* Search input wrapper styles */
 .search-wrap {
   position: relative;
   background-color: var(--grayscale-white);
@@ -138,23 +166,28 @@ body {
   gap: 8px;
 }
 
+/* Search icon styles */
 .search-icon {
   margin-left: 16px;
 }
 
+/* Search input icon color */
 .search-wrap svg path {
   fill: var(--identity-primary);
 }
 
+/* Search input styles */
 .search-wrap > input {
   width: 60%;
   border: none;
 }
 
+/* Sort wrapper styles */
 .sort-wrapper {
   position: relative;
 }
 
+/* Sort button styles */
 .sort-wrap {
   background-color: var(--grayscale-white);
   border-radius: 100%;
@@ -167,6 +200,7 @@ body {
   position: relative;
 }
 
+/* Search close icon styles */
 .search-close-icon {
   position: absolute;
   right: 1rem;
@@ -174,10 +208,12 @@ body {
   cursor: pointer;
 }
 
+/* Visible state for search close icon */
 .search-close-icon-visible {
   display: block;
 }
 
+/* Filter wrapper styles */
 .filter-wrapper {
   position: absolute;
   background: var(--identity-primary);
@@ -193,10 +229,12 @@ body {
   z-index: 5000;
 }
 
+/* Open state for filter wrapper */
 .filter-wrapper-open {
   display: block;
 }
 
+/* Overlay for filter wrapper */
 .filter-wrapper-overlay .main::before {
   background-color: rgba(0, 0, 0, 0.4);
   width: 100%;
@@ -209,12 +247,14 @@ body {
   z-index: 2;
 }
 
+/* Filter text styles */
 .filter-wrapper > .body2-fonts {
   color: var(--grayscale-white);
   font-weight: var(--font-weight-bold);
   padding: 16px 20px;
 }
 
+/* Filter content styles */
 .filter-wrap {
   background-color: var(--grayscale-white);
   box-shadow: var(--drop-shadow-inner);
@@ -222,6 +262,7 @@ body {
   border-radius: 8px;
 }
 
+/* Filter item styles */
 .filter-wrap > div {
   display: flex;
   align-items: center;
@@ -229,14 +270,17 @@ body {
   margin-bottom: 16px;
 }
 
+/* Last filter item styles */
 .filter-wrap > div:last-child {
   margin-bottom: 0px;
 }
 
+/* Filter input styles */
 .filter-wrap input {
   accent-color: var(--identity-primary);
 }
 
+/* Pokemon list container styles */
 .pokemon-list {
   background-color: var(--grayscale-white);
   box-shadow: var(--drop-shadow-inner);
@@ -247,6 +291,7 @@ body {
   overflow-y: auto;
 }
 
+/* List wrapper styles */
 .list-wrapper {
   margin: 1rem 0;
   display: flex;
@@ -256,6 +301,7 @@ body {
   gap: 0.75rem;
 }
 
+/* List item styles */
 .list-item {
   border-radius: 8px;
   box-shadow: var(--drop-shadow);
@@ -267,6 +313,7 @@ body {
   cursor: pointer;
 }
 
+/* List item number styles */
 .list-item .number-wrap {
   min-height: 16px;
   text-align: right;
@@ -274,6 +321,7 @@ body {
   color: var(--grayscale-medium);
 }
 
+/* List item name styles */
 .list-item .name-wrap {
   border-radius: 7px;
   background-color: var(--grayscale-background);
@@ -282,27 +330,27 @@ body {
   margin-top: -18px;
 }
 
+/* List item image wrapper styles */
 .list-item .img-wrap {
   width: 72px;
   height: 72px;
   margin: auto;
 }
 
+/* List item image styles */
 .list-item .img-wrap img {
   width: 100%;
   height: 100%;
 }
 
-
-
-/* detail page */
-
+/* Detail page styles */
 .detail-main .header {
   padding: 20px 20px 24px 20px;
   position: relative;
   z-index: 2;
 }
 
+/* Detail page header wrapper styles */
 .detail-main .header-wrapper {
   display: flex;
   align-items: center;
@@ -310,16 +358,19 @@ body {
   column-gap: 15px;
 }
 
+/* Detail page header content styles */
 .detail-main .header-wrap {
   display: flex;
   align-items: center;
   column-gap: 8px;
 }
 
+/* Back button wrapper styles */
 .detail-main .back-btn-wrap {
   max-height: 32px;
 }
 
+/* Back button and header text styles */
 .detail-main .back-btn-wrap path,
 .detail-main .header-wrapper p,
 .detail-main .header-wrapper h1 {
@@ -327,10 +378,12 @@ body {
   color: var(--grayscale-white);
 }
 
+/* Pokemon ID text styles */
 .detail-main .pokemon-id-wrap p {
   font-weight: var(--font-weight-bold);
 }
 
+/* Detail image wrapper styles */
 .detail-img-wrapper {
   width: 200px;
   height: 200px;
@@ -339,11 +392,13 @@ body {
   z-index: 3;
 }
 
+/* Detail image styles */
 .detail-img-wrapper img {
   width: 100%;
   height: 100%;
 }
 
+/* Detail card wrapper styles */
 .detail-card-detail-wrapper {
   border-radius: 8px;
   background-color: var(--grayscale-white);
@@ -356,6 +411,7 @@ body {
   z-index: 2;
 }
 
+/* Power wrapper styles */
 .power-wrapper {
   display: flex;
   justify-content: center;
@@ -364,6 +420,7 @@ body {
   gap: 16px;
 }
 
+/* Power text styles */
 .power-wrapper > p {
   border-radius: 10px;
   padding: 2px 8px;
@@ -373,31 +430,37 @@ body {
   background-color: #74cb48;
 }
 
+/* Pokemon detail text styles */
 .pokemon-detail.move p {
   text-transform: capitalize;
   word-break: break-all;
 }
 
+/* List item name text styles */
 .list-item .name-wrap p {
   text-transform: capitalize;
 }
 
+/* About text styles */
 .detail-card-detail-wrapper .about-text {
   font-weight: var(--font-weight-bold);
   text-align: center;
 }
 
+/* Pokemon detail wrapper styles */
 .pokemon-detail-wrapper {
   display: flex;
   align-items: flex-end;
 }
 
+/* Pokemon detail content styles */
 .pokemon-detail-wrapper .pokemon-detail-wrap {
   flex: 1;
   text-align: center;
   position: relative;
 }
 
+/* Pokemon detail wrapper vertical divider */
 .pokemon-detail-wrap:before {
   content: "";
   background-color: var(--grayscale-light);
@@ -410,10 +473,12 @@ body {
   margin: auto;
 }
 
+/* Last pokemon detail wrapper styles */
 .pokemon-detail-wrap:last-child::before {
   display: none;
 }
 
+/* Pokemon detail content styles */
 .pokemon-detail {
   display: flex;
   justify-content: center;
@@ -422,10 +487,12 @@ body {
   gap: 8px;
 }
 
+/* Minimum height for pokemon detail wrapper */
 .pokemon-detail-wrapper {
   min-height: 76px;
 }
 
+/* Pokemon detail move styles */
 .pokemon-detail.move {
   flex-direction: column;
   gap: 0;
@@ -433,30 +500,36 @@ body {
   padding: 8px 5px;
 }
 
+/* Caption text styles */
 .pokemon-detail-wrap > .caption-fonts {
   color: var(--grayscale-medium);
 }
 
+/* Rotate icon */
 .pokemon-detail-wrap .straighten {
   transform: rotate(90deg);
 }
 
+/* Pokemon description text styles */
 .detail-card-detail-wrapper .pokemon-description {
   color: var(--grayscale-dark);
   text-align: center;
 }
 
+/* Stats wrapper styles */
 .stats-wrap {
   display: flex;
   align-items: center;
 }
 
+/* Stats text styles */
 .stats-wrap p {
   color: var(--grayscale-dark);
   margin-right: 8px;
   min-width: 19px;
 }
 
+/* Stats value text styles */
 .stats-wrap p.stats {
   text-align: right;
   padding-right: 8px;
@@ -465,20 +538,24 @@ body {
   font-weight: var(--font-weight-bold);
 }
 
+/* Progress bar styles */
 .stats-wrap .progress-bar {
   flex: 1;
   border-radius: 4px;
   height: 4px;
 }
 
+/* Progress bar styles */
 .stats-wrap .progress-bar::-webkit-progress-bar {
   border-radius: 4px;
 }
 
+/* Progress bar value styles */
 .stats-wrap .progress-bar::-webkit-progress-value {
   border-radius: 4px;
 }
 
+/* Detail background styles */
 .detail-bg {
   position: absolute;
   z-index: 1;
@@ -487,10 +564,12 @@ body {
   opacity: 0.1;
 }
 
+/* Detail background color */
 .detail-bg path {
   fill: var(--grayscale-white);
 }
 
+/* Not found message styles */
 div#not-found-message {
   display: none;
   position: absolute;
@@ -501,16 +580,19 @@ div#not-found-message {
   font-weight: 600;
 }
 
+/* Arrow icon styles */
 .arrow img {
   -webkit-filter: brightness(0) grayscale(1) invert(1);
   filter: brightness(0) grayscale(1) invert(1);
   width: 28px;
 }
 
+/* Featured image styles */
 .featured-img {
   position: relative;
 }
 
+/* Arrow button styles */
 .featured-img a.arrow {
   display: inline-block;
   position: absolute;
@@ -519,14 +601,17 @@ div#not-found-message {
   z-index: 999;
 }
 
+/* Left arrow button styles */
 .featured-img a.arrow.left-arrow {
   left: -2rem;
 }
 
+/* Right arrow button styles */
 .featured-img a.arrow.right-arrow {
   right: -2rem;
 }
 
+/* Detail main styles */
 .detail-main.main {
   height: max-content;
   border-color: transparent;
